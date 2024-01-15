@@ -8,13 +8,20 @@ class Scoreboard(Turtle):
         self.color("white")
         self.goto(0,270)
         self.score = 0
-        self.write(f"Score: {self.score}", align="center", font=("Calibri", 20, "normal"))
+        with open("highscore.txt") as file:
+            self.highscore = int(file.read())
+        self.write(f"Score: {self.score}  Highscore = {self.highscore}", align="center", font=("Calibri", 20, "normal"))
 
     def increase(self):
         self.score +=1
         self.clear()
-        self.write(f"Score: {self.score}",align="center",font=("Calibri", 20, "normal"))
+        self.write(f"Score: {self.score}  Highscore = {self.highscore}",align="center",font=("Calibri", 20, "normal"))
 
-    def game_over(self):
-        self.goto(0,0)
-        self.write("Game over!", align="center", font=("Calibri", 20, "normal"))
+    def reset(self):
+        if self.score > self.highscore:
+            self.highscore = self.score
+            with open("highscore.txt",mode="w") as file:
+                file.write(f"self.highscore")
+        self.score = 0
+        self.clear()
+        self.write(f"Score: {self.score}  Highscore = {self.highscore}", align="center", font=("Calibri", 20, "normal"))
